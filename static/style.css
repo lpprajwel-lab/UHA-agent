@@ -1,0 +1,91 @@
+/* static/style.css */
+:root {
+    --primary: #4ade80;
+    --primary-glow: rgba(74, 222, 128, 0.5);
+    --bg-dark: #0f172a;
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --risk-high: #ef4444;
+    --risk-medium: #f59e0b;
+    --risk-low: #3b82f6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; position: relative; }
+
+.background-blobs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+.blob { position: absolute; filter: blur(80px); opacity: 0.5; border-radius: 50%; animation: float 10s infinite ease-in-out alternate; }
+.blob-1 { width: 400px; height: 400px; background: #3b82f6; top: -100px; left: -100px; }
+.blob-2 { width: 500px; height: 500px; background: #10b981; bottom: -150px; right: -100px; animation-delay: -5s; }
+@keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.1); } }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+header { text-align: center; margin-bottom: 3rem; animation: fadeInDown 1s ease-out; }
+header h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -1px; }
+header h1 span { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
+header p { color: var(--text-muted); font-size: 1.2rem; }
+
+.glass {
+    background: var(--glass-bg); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border); border-radius: 20px;
+    padding: 2rem; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.search-panel { display: flex; gap: 1rem; align-items: stretch; justify-content: space-between; flex-wrap: wrap; text-align: center; animation: fadeInUp 1s ease-out 0.2s both;}
+.city-input {
+    flex: 1; padding: 1rem 1.5rem; font-size: 1.2rem;
+    border-radius: 50px; border: 2px solid var(--glass-border);
+    background: rgba(0,0,0,0.2); color: #fff; outline: none;
+    transition: all 0.3s; min-width: 300px;
+}
+.city-input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
+
+.status-indicator { font-weight: 600; display: inline-flex; justify-content:center; align-items: center; gap: 0.5rem; }
+.status-indicator::before { content: ''; display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.status-indicator.idle::before { background: var(--text-muted); }
+.status-indicator.processing::before { background: var(--primary); box-shadow: 0 0 10px var(--primary); animation: pulse 1s infinite; }
+.status-indicator.done::before { background: var(--primary); }
+
+.glow-on-hover {
+    padding: 1rem 2rem; border: none; outline: none; color: #fff;
+    background: linear-gradient(45deg, #10b981, #3b82f6); cursor: pointer;
+    position: relative; z-index: 0; border-radius: 50px;
+    font-weight: 600; font-size: 1.1rem; transition: transform 0.3s ease; white-space: nowrap;
+}
+.glow-on-hover:hover { transform: translateY(-2px); }
+.glow-on-hover:before {
+    content: ''; background: linear-gradient(45deg, #10b981, #3b82f6, #10b981);
+    position: absolute; top: -2px; left:-2px; background-size: 400%; z-index: -1;
+    filter: blur(10px); width: calc(100% + 4px); height: calc(100% + 4px);
+    animation: glowing 20s linear infinite; opacity: 0; transition: opacity .3s ease-in-out; border-radius: 50px;
+}
+.glow-on-hover:hover:before { opacity: 1; }
+.glow-on-hover:after { z-index: -1; content: ''; position: absolute; width: 100%; height: 100%; background: inherit; left: 0; top: 0; border-radius: 50px; }
+@keyframes glowing { 0% { background-position: 0 0; } 50% { background-position: 400% 0; } 100% { background-position: 0 0; } }
+@keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+.result-card {
+    background: var(--glass-bg); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border); border-radius: 20px;
+    padding: 2rem; border-top: 4px solid var(--primary); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s forwards;
+}
+.result-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.2); }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-border); }
+.card-header h2 { font-size: 1.5rem; color: #fff; }
+.risk-badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.risk-High { background: rgba(239, 68, 68, 0.2); color: var(--risk-high); border: 1px solid var(--risk-high); }
+.risk-Medium { background: rgba(245, 158, 11, 0.2); color: var(--risk-medium); border: 1px solid var(--risk-medium); }
+.risk-Low { background: rgba(59, 130, 246, 0.2); color: var(--risk-low); border: 1px solid var(--risk-low); }
+
+h3 { font-size: 1rem; color: var(--text-muted); margin: 1rem 0 0.5rem; }
+p.reason { color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; }
+ul.solutions { list-style: none; margin-bottom: 1rem; }
+ul.solutions li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; color: #cbd5e1; font-size: 0.95rem; }
+ul.solutions li::before { content: '→'; position: absolute; left: 0; color: var(--primary); }
+.impact { background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 10px; font-weight: 600; color: var(--primary); border: 1px dashed rgba(255,255,255,0.1); }

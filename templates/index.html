@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UHI AI Analysis Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>🌍 UHI AI <span>Agent</span></h1>
+            <p>Urban Heat Island Analysis & Mitigation System</p>
+        </header>
+
+        <section class="control-panel glass">
+            <div class="status-box">
+                <span id="agent-status" class="status-indicator idle">Status: System Online - Awaiting Execution</span>
+            </div>
+            <button id="run-btn" class="glow-on-hover">Execute AI Pipeline</button>
+        </section>
+
+        <section id="results-container" class="results-grid">
+            <!-- Results injected here via JS -->
+        </section>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
